@@ -47,7 +47,7 @@ GLuint grass;
 int InitGL(GLvoid)                    // All Setup For OpenGL Goes Here
 {
     glShadeModel(GL_SMOOTH);              // Enable Smooth Shading
-    glClearColor(0.03f, 0.16f, 0.32f, 1.0f);        // Black Background
+    glClearColor(0.03f, 0.16f, 0.33f, 1.0f);        // Black Background
     glClearDepth(1.0f);                  // Depth Buffer Setup
     ShowCursor(FALSE);
     glEnable(GL_TEXTURE_2D);
