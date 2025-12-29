@@ -1,0 +1,20 @@
+# Visual Studio
+.vs/
+*.user
+
+# Build folders
+Debug/
+Release/
+x64/
+x86/
+
+# Compiled files
+*.obj
+*.pdb
+*.ilk
+*.exe
+*.log
+
+# CMake (إن وجد)
+CMakeFiles/
+CMakeCache.txt
