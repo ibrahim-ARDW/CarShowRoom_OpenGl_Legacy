@@ -61,6 +61,8 @@ int InitGL(GLvoid)                    // All Setup For OpenGL Goes Here
     glEnable(GL_DEPTH_TEST);              // Enables Depth Testing
     glDepthFunc(GL_LEQUAL);                // The Type Of Depth Testing To Do
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Really Nice Perspective Calculations
+    glEnable(GL_BLEND); // ÊİÚíá ÎÇÕíÉ ÇáÏãÌ (ááÔİÇİíÉ)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     grass = LoadTexturePng::loadTexture("grass.png");
     if (!carModel.Load("carOBJ/car.obj")) {
         MessageBox(NULL, L"áã íÊã ÇáÚËæÑ Úáì ãáİ ÇáÓíÇÑÉ! ÊÃßÏ ãä æÌæÏå ÈÌÇäÈ ãáİ ÇáÜ exe", L"ÎØÃ İí ÇáÊÍãíá", MB_OK);
@@ -103,9 +105,9 @@ int DrawGLScene(GLvoid)                  // Here's Where We Do All The Drawing
     DrawShapes::drawFloor(grass);
 
     // --- 2. ÑÓã ÇáÓíÇÑÉ ---
-    glDisable(GL_TEXTURE_2D);   // ÊÚØíá ÇáÊßÓÊÔÑ áÃääÇ áã äÈÑãÌå ááÓíÇÑÉ ÈÚÏ
-    glEnable(GL_LIGHTING);      // ÊİÚíá ÇáÅÖÇÁÉ áÅÙåÇÑ ãÌÓã ÇáÓíÇÑÉ
-    glEnable(GL_LIGHT0);        // ÊİÚíá ÇáÖæÁ ÇáÃæá
+    glEnable(GL_TEXTURE_2D);   // ÊÚØíá ÇáÊßÓÊÔÑ áÃääÇ áã äÈÑãÌå ááÓíÇÑÉ ÈÚÏ
+    glDisable(GL_LIGHTING);     // ÊİÚíá ÇáÅÖÇÁÉ áÅÙåÇÑ ãÌÓã ÇáÓíÇÑÉ
+   // glEnable(GL_LIGHT0);        // ÊİÚíá ÇáÖæÁ ÇáÃæá
 
     glPushMatrix();
     glTranslated(0, -1, 0); // ÑİÚ ÇáÓíÇÑÉ ŞáíáÇğ Úä ÇáÃÑÖ

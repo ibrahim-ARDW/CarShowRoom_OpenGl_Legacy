@@ -9,15 +9,19 @@
 #include <string>
 #include <map>
 
-struct Vector3f { float x, y, z; };
 
+
+struct Vector3f { float x, y, z; };
+struct Vector2f { float u, v; }; //  √ﬂœ „‰ ÊÃÊœ Â–« «·”ÿ— Â‰«
 struct Material {
     float r, g, b; // «·√·Ê«‰ ›ﬁÿ
+    GLuint textureID; // —ﬁ„ «·’Ê—… ›Ì –«ﬂ—… OpenGL
 };
 
 struct Face {
     int vIndices[4];
     int nIndices[4];
+    int tIndices[4]; // ›Â—” ≈Õœ«ÀÌ«  «·’Ê—…
     int edgeCount;
     std::string matName;
 };
@@ -34,6 +38,7 @@ private:
     std::vector<Vector3f> normals;
     std::vector<Face> faces;
     std::map<std::string, Material> materials;
+    std::vector<Vector2f> texCoords; // „’›Ê›… · Œ“Ì‰ vt
 };
 
 #endif

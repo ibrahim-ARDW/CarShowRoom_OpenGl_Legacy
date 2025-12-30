@@ -154,6 +154,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="LoadPngTexture.cpp" />
+    <ClCompile Include="LoadTGA.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model_OBJ.cpp" />
     <ClCompile Include="ShapesDrawer.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="DrawAllShapes.h" />
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="LoadPngTexture.h" />
+    <ClInclude Include="LoadTGA.h" />
     <ClInclude Include="Model_3DS.h" />
     <ClInclude Include="Model_OBJ.h" />
   </ItemGroup>

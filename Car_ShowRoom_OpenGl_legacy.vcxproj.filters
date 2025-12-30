@@ -57,6 +57,9 @@
     <ClCompile Include="Model_OBJ.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="LoadTGA.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -81,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model_OBJ.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadTGA.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
