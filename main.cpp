@@ -8,6 +8,7 @@
 #include "CollisionManager.h"
 #include "LoadPngTexture.h"
 #include "DrawAllShapes.h"
+#include "Model_OBJ.h"
 
 
 
@@ -42,7 +43,10 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)    // Resize And Initialize 
 }
 Camera camera;
 float speed = 0.015f;
-//Car car;
+
+//Model_3DS m;
+Model_OBJ carModel;
+
 
 
 GLuint grass;
@@ -57,9 +61,12 @@ int InitGL(GLvoid)                    // All Setup For OpenGL Goes Here
     glEnable(GL_DEPTH_TEST);              // Enables Depth Testing
     glDepthFunc(GL_LEQUAL);                // The Type Of Depth Testing To Do
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Really Nice Perspective Calculations
-    
     grass = LoadTexturePng::loadTexture("grass.png");
-    //car.load();
+    if (!carModel.Load("carOBJ/car.obj")) {
+        MessageBox(NULL, L"áã íÊã ÇáÚËæÑ Úáì ãáİ ÇáÓíÇÑÉ! ÊÃßÏ ãä æÌæÏå ÈÌÇäÈ ãáİ ÇáÜ exe", L"ÎØÃ İí ÇáÊÍãíá", MB_OK);
+        return FALSE; // İÔá ÇáÊÍãíá
+    }
+    
     return TRUE;                    // Initialization Went OK
 }
 
@@ -67,34 +74,46 @@ int InitGL(GLvoid)                    // All Setup For OpenGL Goes Here
 int DrawGLScene(GLvoid)                  // Here's Where We Do All The Drawing
 {
     CollisionManager::clear();
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    glTranslated(0, 0, 0);
-    glEnable(GL_LINE_SMOOTH);
+
+    // ßæÏ ÇáŞİÒ (ßãÇ åæ ÈÏæä ÊÛííÑ)
     if (camera.jumping)
     {
-        camera.jumpTime += 0.0005f; // ÃÈØÃ: Şáøá ŞíãÉ ÇáÒíÇÏÉ (0.01f ÈÏá 0.02f)
-
-        float jumpHeight = 4.0f; // ÇÑÊİÇÚ ÃÚáì ááŞİÒ (ãËáÇğ 2.5 ãÊÑ)
-
-        // ãÚÇÏáÉ ÇáŞİÒ: sin(pi * t) * jumpHeight
+        camera.jumpTime += 0.0005f;
+        float jumpHeight = 4.0f;
         camera.y = camera.jumpStartY + sinf(camera.jumpTime * 3.14159f) * jumpHeight;
-
         if (camera.jumpTime >= 1.0f)
         {
             camera.jumping = false;
-            camera.y = camera.height; // ÇáÚæÏÉ áÇÑÊİÇÚ ÇáãÔí ÇáØÈíÚí
+            camera.y = camera.height;
         }
     }
 
     camera.updateView();
-    DrawShapes::drawFloor(grass);
-  //  glScalef(0.30f, 0.30f, 0.30f);
-   // car.draw();
-   
 
-    //        HERE WHERE WE START DRAWING :D
+    // --- 1. ÑÓã ÇáÚÔÈ (ÇáÃÑÖíÉ) ---
+    glEnable(GL_TEXTURE_2D);    // ÊİÚíá ÇáÊßÓÊÔÑ
+    glDisable(GL_LIGHTING);     // ÊÚØíá ÇáÅÖÇÁÉ ãÄŞÊÇğ áíßæä ÇáÚÔÈ ÓÇØÚÇğ
+
+    // ÇáÍá ÇáÓÍÑí: ÅÚÇÏÉ Çááæä ááÃÈíÖ ÇáÕÇİí 100% 
+    // áßí ÊÙåÑ ÕæÑÉ ÇáÚÔÈ ÈÃáæÇäåÇ ÇáÃÕáíÉ Ïæä ÊÃËÑ ÈÃáæÇä ÇáÓíÇÑÉ
+    glColor3f(1.0f, 1.0f, 1.0f);
+
+    DrawShapes::drawFloor(grass);
+
+    // --- 2. ÑÓã ÇáÓíÇÑÉ ---
+    glDisable(GL_TEXTURE_2D);   // ÊÚØíá ÇáÊßÓÊÔÑ áÃääÇ áã äÈÑãÌå ááÓíÇÑÉ ÈÚÏ
+    glEnable(GL_LIGHTING);      // ÊİÚíá ÇáÅÖÇÁÉ áÅÙåÇÑ ãÌÓã ÇáÓíÇÑÉ
+    glEnable(GL_LIGHT0);        // ÊİÚíá ÇáÖæÁ ÇáÃæá
+
+    glPushMatrix();
+    glTranslated(0, -1, 0); // ÑİÚ ÇáÓíÇÑÉ ŞáíáÇğ Úä ÇáÃÑÖ
+    glScalef(0.7f, 0.7f, 0.7f);
+    carModel.Draw();         // ÑÓã ÇáãæÏíá ÇáÓÑíÚ (Display List)
+    glPopMatrix();
+
+    glDisable(GL_LIGHTING);     // ÊÚØíá ÇáÅÖÇÁÉ áÈÇŞí ÇáÚäÇÕÑ (ÇÎÊíÇÑí)
 
     return TRUE;
 }

@@ -51,6 +51,7 @@ void DrawShapes::drawMountains(GLuint texture)
 
 void DrawShapes::drawFloor(GLuint texture)
 {
+   
     glBindTexture(GL_TEXTURE_2D, texture);
 
     glBegin(GL_QUADS);

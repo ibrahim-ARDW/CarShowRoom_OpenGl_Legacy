@@ -54,17 +54,8 @@
     <ClCompile Include="ShapesDrawer.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
+    <ClCompile Include="Model_OBJ.cpp">
       <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="OBJLoader.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Car.cpp">
-      <Filter>Source Files\Objects\carr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,17 +74,14 @@
     <ClInclude Include="DrawAllShapes.h">
       <Filter>Source Files\World</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Source Files\Engine</Filter>
+    <ClInclude Include="GLTexture.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Source Files\Engine</Filter>
+    <ClInclude Include="Model_3DS.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OBJLoader.h">
+    <ClInclude Include="Model_OBJ.h">
       <Filter>Source Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Car.h">
-      <Filter>Source Files\Objects\carr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
