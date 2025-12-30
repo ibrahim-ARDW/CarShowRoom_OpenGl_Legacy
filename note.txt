@@ -1,0 +1,5 @@
+_CRT_NONSTDC_NO_DEPRECATE
+_CRT_SECURE_NO_WARNINGS
+
+VS(2015) must and to linker
+legacy_stdio_definitions.lib

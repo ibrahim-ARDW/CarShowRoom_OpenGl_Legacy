@@ -8,7 +8,7 @@
 #include "CollisionManager.h"
 #include "LoadPngTexture.h"
 #include "DrawAllShapes.h"
-#include "Car.h"
+
 
 
 HDC      hDC = NULL;    // Private GDI Device Context
@@ -42,7 +42,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)    // Resize And Initialize 
 }
 Camera camera;
 float speed = 0.015f;
-Car car;
+//Car car;
 
 
 GLuint grass;
@@ -59,7 +59,7 @@ int InitGL(GLvoid)                    // All Setup For OpenGL Goes Here
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Really Nice Perspective Calculations
     
     grass = LoadTexturePng::loadTexture("grass.png");
-    car.load();
+    //car.load();
     return TRUE;                    // Initialization Went OK
 }
 
@@ -91,7 +91,7 @@ int DrawGLScene(GLvoid)                  // Here's Where We Do All The Drawing
     camera.updateView();
     DrawShapes::drawFloor(grass);
   //  glScalef(0.30f, 0.30f, 0.30f);
-    car.draw();
+   // car.draw();
    
 
     //        HERE WHERE WE START DRAWING :D

@@ -1,12 +1,21 @@
-#pragma once
-#include <windows.h>    // Header File For Windows
-#include <gl.h>      // Header File For The OpenGL32 Library
-#include <glu.h>      // Header File For The GLu32 Library
-#include <glaux.h>
-#include <string>
 
-class Texture {
-public:
-    static GLuint load(const std::string& path);
-};
+/**********************************************************
+ *
+ * VARIABLES DECLARATION
+ *
+ *********************************************************/
 
+// Counter to keep track of the last loaded texture
+extern int num_texture;
+
+
+
+/**********************************************************
+ *
+ * FUNCTION LoadBitmap(char *)
+ *
+ * This function loads a bitmap file and return the OpenGL reference ID to use that texture
+ *
+ *********************************************************/
+
+extern int LoadTexture(char *filename,int alpha=255);
