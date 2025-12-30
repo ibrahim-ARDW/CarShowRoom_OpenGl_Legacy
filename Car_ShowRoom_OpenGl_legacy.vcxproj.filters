@@ -25,44 +25,80 @@
     <Filter Include="Source Files\Physics">
       <UniqueIdentifier>{440e2178-1e59-45f5-89b4-c15e647d52ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\photos-sounds">
+      <UniqueIdentifier>{86a65ca5-b742-4382-8480-695cc2e5ae08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\models3d">
+      <UniqueIdentifier>{23b8efbf-a54f-46ea-85b9-49302f7593db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\models3d\car">
+      <UniqueIdentifier>{5e448080-7454-4135-b212-e70efbf0ccb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\carr">
+      <UniqueIdentifier>{f2790beb-e515-4944-aba5-43fd81b7da96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadPngTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ShapesDrawer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="LoadPngTexture.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapesDrawer.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJLoader.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Car.cpp">
+      <Filter>Source Files\Objects\carr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Collision.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadPngTexture.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawAllShapes.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadPngTexture.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawAllShapes.h">
+      <Filter>Source Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJLoader.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Car.h">
+      <Filter>Source Files\Objects\carr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="grass.png">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\photos-sounds</Filter>
     </Image>
   </ItemGroup>
 </Project>

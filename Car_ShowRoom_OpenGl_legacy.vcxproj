@@ -152,17 +152,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Car.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="LoadPngTexture.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="ShapesDrawer.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Car.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="DrawAllShapes.h" />
     <ClInclude Include="LoadPngTexture.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="OBJLoader.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="grass.png" />
