@@ -166,7 +166,7 @@ Ks 0.031746 0.031746 0.031746
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd EMzone_Padanga.tga
+map_Kd wood.png
 
 newmtl glass2.001
 Ns 96.078431

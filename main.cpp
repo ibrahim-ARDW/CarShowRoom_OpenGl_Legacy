@@ -8,7 +8,9 @@
 #include "CollisionManager.h"
 #include "LoadPngTexture.h"
 #include "DrawAllShapes.h"
-#include "Model_OBJ.h"
+#include "OBJLoader.h"
+#include "Mesh.h"
+
 
 
 
@@ -44,12 +46,9 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)    // Resize And Initialize 
 Camera camera;
 float speed = 0.015f;
 
-//Model_3DS m;
-Model_OBJ carModel;
-
-
-
 GLuint grass;
+
+std::vector<Mesh> carMeshes;
 
 int InitGL(GLvoid)                    // All Setup For OpenGL Goes Here
 {
@@ -61,13 +60,38 @@ int InitGL(GLvoid)                    // All Setup For OpenGL Goes Here
     glEnable(GL_DEPTH_TEST);              // Enables Depth Testing
     glDepthFunc(GL_LEQUAL);                // The Type Of Depth Testing To Do
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Really Nice Perspective Calculations
-    glEnable(GL_BLEND); //  ›⁄Ì· Œ«’Ì… «·œ„Ã (··‘›«›Ì…)
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    grass = LoadTexturePng::loadTexture("grass.png");
-    if (!carModel.Load("carOBJ/car.obj")) {
-        MessageBox(NULL, L"·„ Ì „ «·⁄ÀÊ— ⁄·Ï „·› «·”Ì«—…!  √ﬂœ „‰ ÊÃÊœÂ »Ã«‰» „·› «·‹ exe", L"Œÿ√ ›Ì «· Õ„Ì·", MB_OK);
-        return FALSE; // ›‘· «· Õ„Ì·
+    //glEnable(GL_BLEND); //  ›⁄Ì· Œ«’Ì… «·œ„Ã (··‘›«›Ì…)
+   // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    GLfloat ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f }; // ÷Ê¡ „ÕÌÿÌ Œ«›  ··Ÿ·«·
+    GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8f, 1.0f }; // ÷Ê¡ √”«”Ì „ Ê«“‰
+    GLfloat specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f }; // ·„⁄«‰ „⁄ œ·
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+
+    glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHTING); //  ›⁄Ì· «·≈÷«¡… ⁄«·„Ì«
+
+    // ”ÿ— ”Õ—Ì: Ì„‰⁄ «·÷Ê¡ „‰ «·«‰›Ã«— ⁄‰œ ⁄„· Scale ··„ÊœÌ·
+    glEnable(GL_NORMALIZE);
+
+    //  ›⁄Ì·  ›«⁄· «·√·Ê«‰ „⁄ «·≈÷«¡…
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+    if (!OBJLoader::loadOBJ("carOBJ/car.obj", carMeshes)) {
+        MessageBox(NULL, L"Failed to load car model!", L"Error", MB_OK);
+        return FALSE;
     }
+
+    //  ÕÊÌ· «·»Ì«‰«  ≈·Ï Display Lists ·“Ì«œ… ”—⁄… «·—”„ (FPS)
+    OBJLoader::createDisplayLists(carMeshes);
+      
+     
+
+    grass = LoadTexturePng::loadTexture("grass.png");
+
     
     return TRUE;                    // Initialization Went OK
 }
@@ -78,7 +102,7 @@ int DrawGLScene(GLvoid)                  // Here's Where We Do All The Drawing
     CollisionManager::clear();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-
+    glEnable(GL_TEXTURE_2D);
     // ﬂÊœ «·ﬁ›“ (ﬂ„« ÂÊ »œÊ‰  €ÌÌ—)
     if (camera.jumping)
     {
@@ -94,34 +118,44 @@ int DrawGLScene(GLvoid)                  // Here's Where We Do All The Drawing
 
     camera.updateView();
 
-    // --- 1. —”„ «·⁄‘» («·√—÷Ì…) ---
-    glEnable(GL_TEXTURE_2D);    //  ›⁄Ì· «· ﬂ” ‘—
-    glDisable(GL_LIGHTING);     //  ⁄ÿÌ· «·≈÷«¡… „ƒﬁ « ·ÌﬂÊ‰ «·⁄‘» ”«ÿ⁄«
 
-    // «·Õ· «·”Õ—Ì: ≈⁄«œ… «··Ê‰ ··√»Ì÷ «·’«›Ì 100% 
-    // ·ﬂÌ  ŸÂ— ’Ê—… «·⁄‘» »√·Ê«‰Â« «·√’·Ì… œÊ‰  √À— »√·Ê«‰ «·”Ì«—…
+
+    GLfloat lightPos[] = { 5.0f, 10.0f, 5.0f, 1.0f };
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+
+    // 1. —”„ «·√—÷Ì… (‰ √ﬂœ „‰ ≈⁄ÿ«∆Â« ·Ê‰« √»Ì÷« · ŸÂ— «· ﬂ” ‘— ÿ»Ì⁄Ì…)
     glColor3f(1.0f, 1.0f, 1.0f);
-
     DrawShapes::drawFloor(grass);
-
-    // --- 2. —”„ «·”Ì«—… ---
-    glEnable(GL_TEXTURE_2D);   //  ⁄ÿÌ· «· ﬂ” ‘— ·√‰‰« ·„ ‰»—„ÃÂ ··”Ì«—… »⁄œ
-    glDisable(GL_LIGHTING);     //  ›⁄Ì· «·≈÷«¡… ·≈ŸÂ«— „Ã”„ «·”Ì«—…
-   // glEnable(GL_LIGHT0);        //  ›⁄Ì· «·÷Ê¡ «·√Ê·
-
     glPushMatrix();
     glTranslated(0, -1, 0); // —›⁄ «·”Ì«—… ﬁ·Ì·« ⁄‰ «·√—÷
-    glScalef(0.7f, 0.7f, 0.7f);
-    carModel.Draw();         // —”„ «·„ÊœÌ· «·”—Ì⁄ (Display List)
+   
+    glScalef(1.0f, 1.0f, 1.0f);
+    // --- «” œ⁄«¡ «·—”„ «·√”«”Ì ---
+    for (auto& mesh : carMeshes) {
+        // Ì „ «· Õﬂ„ ›Ì «·‹ Texture Ê«·‹ Normal œ«Œ· «·‹ Display List
+        if (mesh.displayListID) {
+            glCallList(mesh.displayListID);
+        }
+    }
+
     glPopMatrix();
 
-    glDisable(GL_LIGHTING);     //  ⁄ÿÌ· «·≈÷«¡… ·»«ﬁÌ «·⁄‰«’— («Œ Ì«—Ì)
+   // SwapBuffers(wglGetCurrentDC());
 
     return TRUE;
 }
 
 GLvoid KillGLWindow(GLvoid)                // Properly Kill The Window
 {
+    for (auto& mesh : carMeshes) {
+        if (mesh.displayListID) {
+            glDeleteLists(mesh.displayListID, 1);
+        }
+        if (mesh.textureID) {
+            glDeleteTextures(1, &mesh.textureID);
+        }
+    }
+    carMeshes.clear();
     if (fullscreen)                    // Are We In Fullscreen Mode?
     {
         ChangeDisplaySettings(NULL, 0);          // If So Switch Back To The Desktop

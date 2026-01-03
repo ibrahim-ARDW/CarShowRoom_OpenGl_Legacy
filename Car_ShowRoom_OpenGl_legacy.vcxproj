@@ -156,19 +156,21 @@
     <ClCompile Include="LoadPngTexture.cpp" />
     <ClCompile Include="LoadTGA.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Model_OBJ.cpp" />
+    <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="ShapesDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Car.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="DrawAllShapes.h" />
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="LoadPngTexture.h" />
     <ClInclude Include="LoadTGA.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model_3DS.h" />
-    <ClInclude Include="Model_OBJ.h" />
+    <ClInclude Include="OBJLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="grass.png" />
