@@ -115,10 +115,8 @@ int DrawGLScene(GLvoid)                  // Here's Where We Do All The Drawing
     if (Car::isDriven) {
         Car::updateDriving(keys, camera);
     }
-    else {
-        // ⁄‰œ «·ﬁÌ«œ…° «·ﬂ«„Ì—«   »⁄ «·”Ì«—…  ·ﬁ«∆Ì«
-        camera.updateView();
-    }
+
+    camera.updateView(); // ? œ«Ì„« œ«Ì„« œ«Ì„«
 
     GLfloat lightPos[] = { 5.0f, 10.0f, 5.0f, 1.0f };
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
@@ -532,10 +530,12 @@ int WINAPI WinMain(HINSTANCE  hInstance,      // Instance
             else camera.y = camera.height;
             if (keys['E'])
             {
-               float dist = sqrt(pow(Car::x - camera.x, 2) + pow(Car::z - camera.z, 2));
-    if (dist < 3.0f || Car::isDriven) { 
-        Car::mount(camera); // ”Ì‰ﬁ· «·ﬂ«„Ì—« ›Ê—«
-    }
+                //float dist = sqrt(pow(Car::x - camera.x, 2) + pow(Car::z - camera.z, 2));
+                //if (dist < 3.0f || Car::isDriven) {
+                //    Car::mount(camera); // ”Ì‰ﬁ· «·ﬂ«„Ì—« ›Ê—«
+                //}
+
+                Car::mount(camera);
             }
 
          /*   if (keys['R'])
