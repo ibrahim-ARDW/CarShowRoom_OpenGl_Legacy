@@ -10,6 +10,7 @@
 #include "DrawAllShapes.h"
 #include "OBJLoader.h"
 #include "Mesh.h"
+#include "Car.h"
 
 
 
@@ -45,10 +46,10 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)    // Resize And Initialize 
 }
 Camera camera;
 float speed = 0.015f;
-
+//Car MyCar;
 GLuint grass;
 
-std::vector<Mesh> carMeshes;
+//std::vector<Mesh> carMeshes;
 
 int InitGL(GLvoid)                    // All Setup For OpenGL Goes Here
 {
@@ -65,34 +66,25 @@ int InitGL(GLvoid)                    // All Setup For OpenGL Goes Here
     GLfloat ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f }; // ÷Ê¡ „ÕÌÿÌ Œ«›  ··Ÿ·«·
     GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8f, 1.0f }; // ÷Ê¡ √”«”Ì „ Ê«“‰
     GLfloat specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f }; // ·„⁄«‰ „⁄ œ·
-
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
     glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
-
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING); //  ›⁄Ì· «·≈÷«¡… ⁄«·„Ì«
-
     // ”ÿ— ”Õ—Ì: Ì„‰⁄ «·÷Ê¡ „‰ «·«‰›Ã«— ⁄‰œ ⁄„· Scale ··„ÊœÌ·
     glEnable(GL_NORMALIZE);
-
     //  ›⁄Ì·  ›«⁄· «·√·Ê«‰ „⁄ «·≈÷«¡…
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-
-    if (!OBJLoader::loadOBJ("carOBJ/car.obj", carMeshes)) {
-        MessageBox(NULL, L"Failed to load car model!", L"Error", MB_OK);
-        return FALSE;
-    }
-
-    //  ÕÊÌ· «·»Ì«‰«  ≈·Ï Display Lists ·“Ì«œ… ”—⁄… «·—”„ (FPS)
-    OBJLoader::createDisplayLists(carMeshes);
-      
-     
-
+    Car::load("carOBJ/car.obj");
+    //if (!OBJLoader::loadOBJ("carOBJ/car.obj", carMeshes)) {
+    //    MessageBox(NULL, L"Failed to load car model!", L"Error", MB_OK);
+    //    return FALSE;
+    //}
+    ////  ÕÊÌ· «·»Ì«‰«  ≈·Ï Display Lists ·“Ì«œ… ”—⁄… «·—”„ (FPS)
+    //OBJLoader::createDisplayLists(carMeshes);
     grass = LoadTexturePng::loadTexture("grass.png");
 
-    
     return TRUE;                    // Initialization Went OK
 }
 
@@ -116,9 +108,17 @@ int DrawGLScene(GLvoid)                  // Here's Where We Do All The Drawing
         }
     }
 
-    camera.updateView();
+   // camera.updateView();
 
+    
 
+    if (Car::isDriven) {
+        Car::updateDriving(keys, camera);
+    }
+    else {
+        // ⁄‰œ «·ﬁÌ«œ…° «·ﬂ«„Ì—«   »⁄ «·”Ì«—…  ·ﬁ«∆Ì«
+        camera.updateView();
+    }
 
     GLfloat lightPos[] = { 5.0f, 10.0f, 5.0f, 1.0f };
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
@@ -126,19 +126,7 @@ int DrawGLScene(GLvoid)                  // Here's Where We Do All The Drawing
     // 1. —”„ «·√—÷Ì… (‰ √ﬂœ „‰ ≈⁄ÿ«∆Â« ·Ê‰« √»Ì÷« · ŸÂ— «· ﬂ” ‘— ÿ»Ì⁄Ì…)
     glColor3f(1.0f, 1.0f, 1.0f);
     DrawShapes::drawFloor(grass);
-    glPushMatrix();
-    glTranslated(0, -1, 0); // —›⁄ «·”Ì«—… ﬁ·Ì·« ⁄‰ «·√—÷
-   
-    glScalef(1.0f, 1.0f, 1.0f);
-    // --- «” œ⁄«¡ «·—”„ «·√”«”Ì ---
-    for (auto& mesh : carMeshes) {
-        // Ì „ «· Õﬂ„ ›Ì «·‹ Texture Ê«·‹ Normal œ«Œ· «·‹ Display List
-        if (mesh.displayListID) {
-            glCallList(mesh.displayListID);
-        }
-    }
-
-    glPopMatrix();
+    Car::draw();
 
    // SwapBuffers(wglGetCurrentDC());
 
@@ -147,15 +135,7 @@ int DrawGLScene(GLvoid)                  // Here's Where We Do All The Drawing
 
 GLvoid KillGLWindow(GLvoid)                // Properly Kill The Window
 {
-    for (auto& mesh : carMeshes) {
-        if (mesh.displayListID) {
-            glDeleteLists(mesh.displayListID, 1);
-        }
-        if (mesh.textureID) {
-            glDeleteTextures(1, &mesh.textureID);
-        }
-    }
-    carMeshes.clear();
+ 
     if (fullscreen)                    // Are We In Fullscreen Mode?
     {
         ChangeDisplaySettings(NULL, 0);          // If So Switch Back To The Desktop
@@ -550,12 +530,15 @@ int WINAPI WinMain(HINSTANCE  hInstance,      // Instance
 
             }
             else camera.y = camera.height;
-        /*    if (keys['E'])
+            if (keys['E'])
             {
-                angle5 += x;
+               float dist = sqrt(pow(Car::x - camera.x, 2) + pow(Car::z - camera.z, 2));
+    if (dist < 3.0f || Car::isDriven) { 
+        Car::mount(camera); // ”Ì‰ﬁ· «·ﬂ«„Ì—« ›Ê—«
+    }
             }
 
-            if (keys['R'])
+         /*   if (keys['R'])
             {
                 angle6 += x;
             }*/

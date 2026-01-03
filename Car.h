@@ -6,23 +6,19 @@
 
 class Car {
 public:
-    // ÇáæÖÚ æÇáãßÇä
-    float x, y, z;
-    float angle;
-    float speed;
-    bool isDriven; // åá ÇááÇÚÈ ÏÇÎá ÇáÓíÇÑÉ¿
+    // ãÊÛíÑÇÊ ÇáÍÇáÉ (Static áÓåæáÉ ÇáæÕæá)
+    static float x, y, z;
+    static float angle, speed;
+    static bool isDriven;
+    static std::vector<Mesh> meshes;
 
-    std::vector<Mesh> meshes;
+    // æÙÇÆİ ÇáÊÍßã
+    static bool load(const std::string& path);
+    static void draw();
 
-    Car();
-    bool load(const std::string& path);
+    // ÏÇáÉ ÇáŞíÇÏÉ ÇáÊí ÓÊÓÊÏÚíåÇ İí ÍáŞÉ ÇáÜ Update
+    static void updateDriving(bool keys[], Camera& cam);
 
-    // ÏÇáÉ ÇáÊÍÏíË ÊÃÎĞ ãÑÌÚ ááßÇãíÑÇ áÊÊÍßã ÈåÇ ÚäÏ ÇáŞíÇÏÉ
-    void update(bool keys[], Camera& cam);
-
-    // ÏÇáÉ ÇáÑÓã
-    void draw();
-
-    // ÏÇáÉ ááÊÍŞŞ ãä ÇáãÓÇİÉ Èíä ÇáßÇãíÑÇ æÇáÓíÇÑÉ
-    bool isPlayerNear(float camX, float camZ);
+    // ÏÇáÉ ÇáÇäÊŞÇá ááßÇãíÑÇ ÇáÊí ÓÊÓÊÏÚíåÇ ÚäÏ ÖÛØ E
+    static void mount(Camera& cam);
 };

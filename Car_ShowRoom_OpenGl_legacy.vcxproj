@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Car.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="LoadPngTexture.cpp" />
     <ClCompile Include="LoadTGA.cpp" />
